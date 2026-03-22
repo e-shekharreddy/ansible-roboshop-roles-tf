@@ -1,0 +1,49 @@
+- name: app setup
+  tags:
+  - deployment # if i wnat t o run spectific tak=sk the we use tags for that in command we use -t deployment 
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup.yaml
+
+- name: nodejs setup 
+  # ansible.builtin.include_role:  if we use this command its not respecting the tags
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: nodejs-setup.yaml
+
+- name: systemd setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd-setup.yaml
+
+- name: Enable and start catalogue
+  ansible.builtin.service:
+    name: catalogue
+    state: started
+    enabled: true
+
+
+- name: copying mongo.repo
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: install mongo client
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: present
+
+- name: check products loaded
+  ansible.builtin.command: mongosh --host "{{ MONGODB_HOST }}" --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+  register: catalogue_output
+
+
+- name: products loading
+  ansible.builtin.shell: mongosh --host "{{ MONGODB_HOST }}" </app/db/master-data.js
+  when: catalogue_output.stdout | int < 0
+
+- name: Enable and start catalogue
+  ansible.builtin.service:
+    name: catalogue
+    state: restarted
+    enabled: true
