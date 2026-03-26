@@ -12,3 +12,4 @@ MYSQL_HOST: mysql-"{{ env }}".tsmvr.fun
 SHIPPING_HOST: shipping-"{{ env }}".tsmvr.fun
 RABBITMQ_HOST: rabbitmq-"{{ env }}".tsmvr.fun
 PAYMENT_HOST: payment-"{{ env }}".tsmvr.fun
+app_version: v3
