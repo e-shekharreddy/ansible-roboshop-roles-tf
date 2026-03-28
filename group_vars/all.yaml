@@ -1,15 +1,17 @@
 ansible_user: ec2-user
 ansible_password: DevOps321
 
+MONGODB_HOST: mongodb-{{ env }}.tsmvr.fun
+REDIS_HOST: redis-{{ env }}.tsmvr.fun
+MYSQL_HOST: mysql-{{ env }}.tsmvr.fun
+RABBITMQ_HOST: rabbitmq-{{ env }}.tsmvr.fun
 
 
-MONGODB_HOST: mongodb-"{{ env }}".tsmvr.fun
-CATALOGUE_HOST: catalogue-"{{ env }}".tsmvr.fun
-REDIS_HOST: redis-"{{ env }}".tsmvr.fun
-USER_HOST: user-"{{ env }}".tsmvr.fun
-CART_HOST: cart-"{{ env }}".tsmvr.fun
-MYSQL_HOST: mysql-"{{ env }}".tsmvr.fun
-SHIPPING_HOST: shipping-"{{ env }}".tsmvr.fun
-RABBITMQ_HOST: rabbitmq-"{{ env }}".tsmvr.fun
-PAYMENT_HOST: payment-"{{ env }}".tsmvr.fun
+CATALOGUE_HOST: catalogue.backend-alb-{{ env }}.tsmvr.fun
+USER_HOST: user.backend-alb-{{ env }}.tsmvr.fun
+CART_HOST: cart.backend-alb-{{ env }}.tsmvr.fun
+SHIPPING_HOST: shipping.backend-alb-{{ env }}.tsmvr.fun
+PAYMENT_HOST: payment.backend-alb-{{ env }}.tsmvr.fun
+
+
 app_version: v3
